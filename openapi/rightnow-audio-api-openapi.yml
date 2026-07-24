@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: RunInfra Audio API
+  description: OpenAI-compatible HTTP API for verified RunInfra inference deployments.
+  version: '2026-04-24'
+  contact:
+    name: RunInfra support
+    email: jaber@runinfra.ai
+    url: https://runinfra.ai/contact
+servers:
+- url: https://api.runinfra.ai/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Audio
+paths:
+  /audio/transcriptions:
+    post:
+      operationId: createTranscription
+      summary: Transcribe audio
+      description: Speech-to-text via Whisper-class models. Multipart upload with a non-empty audio file. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries.
+      tags:
+      - Audio
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TranscriptionRequest'
+      responses:
+        '200':
+          description: Transcription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transcription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+  /audio/speech:
+    post:
+      operationId: createSpeech
+      summary: Generate speech
+      description: Text-to-speech served by XTTS, Bark, or Qwen3-TTS depending on the pipeline. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries.
+      tags:
+      - Audio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpeechRequest'
+      responses:
+        '200':
+          description: Audio bytes
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+components:
+  responses:
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in the window
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    TranscriptionRequest:
+      type: object
+      required:
+      - file
+      - model
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Non-empty audio file (mp3, wav, m4a, flac, webm, ogg).
+        model:
+          type: string
+          example: whisper-large-v3
+        language:
+          type: string
+          description: ISO-639-1 code
+        prompt:
+          type: string
+        response_format:
+          type: string
+          enum:
+          - json
+          - text
+          - srt
+          - vtt
+          - verbose_json
+          default: json
+        temperature:
+          type: number
+          default: 0
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
+    SpeechRequest:
+      type: object
+      required:
+      - model
+      - input
+      properties:
+        model:
+          type: string
+          example: kokoro
+        input:
+          type: string
+        voice:
+          type: string
+        response_format:
+          type: string
+          enum:
+          - mp3
+          - wav
+          - flac
+          - opus
+          - aac
+          - pcm
+          default: mp3
+        speed:
+          type: number
+          default: 1
+          minimum: 0.25
+          maximum: 4
+    Transcription:
+      type: object
+      properties:
+        text:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: RunInfra API key. Generate at https://runinfra.ai/settings/api-keys

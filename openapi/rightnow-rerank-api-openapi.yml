@@ -1,0 +1,338 @@
+openapi: 3.1.0
+info:
+  title: RunInfra Audio Rerank API
+  description: OpenAI-compatible HTTP API for verified RunInfra inference deployments.
+  version: '2026-04-24'
+  contact:
+    name: RunInfra support
+    email: jaber@runinfra.ai
+    url: https://runinfra.ai/contact
+servers:
+- url: https://api.runinfra.ai/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Rerank
+paths:
+  /rerank:
+    post:
+      operationId: createRerank
+      summary: Rerank documents
+      description: Text reranking for verified TEI deployments and multimodal document reranking for compatible vLLM vision rerank deployments. Flat workspace requests are replay-safe when an Idempotency-Key is provided; pipeline-scoped rerank helpers are sent once.
+      tags:
+      - Rerank
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RerankRequest'
+      responses:
+        '200':
+          description: Rerank response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RerankResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in the window
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Request cannot be replayed or processed safely
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
+    RerankResult:
+      type: object
+      required:
+      - index
+      - score
+      properties:
+        index:
+          type: integer
+        score:
+          type: number
+        id:
+          type: string
+        text:
+          type: string
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankContentPart'
+    RerankRequest:
+      type: object
+      required:
+      - model
+      - query
+      properties:
+        model:
+          type: string
+          example: bge-reranker-v2-m3
+        query:
+          type: string
+          example: What is RunInfra Instant Start?
+        texts:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 500
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankDocument'
+          minItems: 1
+          maxItems: 500
+        top_n:
+          type: integer
+          minimum: 1
+          description: Optional number of ranked results to return.
+      oneOf:
+      - required:
+        - texts
+      - required:
+        - documents
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    RerankScore:
+      type: object
+      required:
+      - index
+      - score
+      properties:
+        index:
+          type: integer
+        score:
+          type: number
+    RerankContentPart:
+      oneOf:
+      - type: object
+        required:
+        - type
+        - text
+        properties:
+          type:
+            const: text
+          text:
+            type: string
+      - type: object
+        required:
+        - type
+        - image_url
+        properties:
+          type:
+            const: image_url
+          image_url:
+            oneOf:
+            - type: string
+            - type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+      - type: object
+        required:
+        - type
+        - video_url
+        properties:
+          type:
+            const: video_url
+          video_url:
+            oneOf:
+            - type: string
+            - type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+    RerankResponse:
+      type: object
+      required:
+      - object
+      - model
+      - scores
+      - rankings
+      - results
+      - document_count
+      properties:
+        object:
+          type: string
+          example: runinfra.rerank
+        model:
+          type: string
+        upstream_model:
+          type: string
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankScore'
+        rankings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankResult'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankResult'
+        document_count:
+          type: integer
+        usage:
+          $ref: '#/components/schemas/Usage'
+    RerankDocument:
+      oneOf:
+      - type: string
+      - type: object
+        required:
+        - text
+        properties:
+          id:
+            type: string
+          text:
+            type: string
+      - type: object
+        required:
+        - content
+        description: Multimodal document shape for compatible vLLM vision rerank deployments. TEI rerank deployments are text-only.
+        properties:
+          id:
+            type: string
+          content:
+            type: array
+            minItems: 1
+            items:
+              $ref: '#/components/schemas/RerankContentPart'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: RunInfra API key. Generate at https://runinfra.ai/settings/api-keys

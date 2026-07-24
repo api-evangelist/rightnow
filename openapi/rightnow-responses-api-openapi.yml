@@ -1,0 +1,333 @@
+openapi: 3.1.0
+info:
+  title: RunInfra Audio Responses API
+  description: OpenAI-compatible HTTP API for verified RunInfra inference deployments.
+  version: '2026-04-24'
+  contact:
+    name: RunInfra support
+    email: jaber@runinfra.ai
+    url: https://runinfra.ai/contact
+servers:
+- url: https://api.runinfra.ai/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Responses
+paths:
+  /responses:
+    post:
+      operationId: createResponse
+      summary: Create response
+      description: Responses-shaped chat-completions compatibility adapter for compatible LLM and vision-language deployments. Does not implement full state, include, reasoning, hosted-tool, conversation-item, or background-job semantics.
+      tags:
+      - Responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResponsesRequest'
+      responses:
+        '200':
+          description: Response object or SSE stream if stream=true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsesResponse'
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ResponsesEvent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in the window
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Request cannot be replayed or processed safely
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ResponsesEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          example: response.output_text.delta
+        delta:
+          type: string
+        response:
+          $ref: '#/components/schemas/ResponsesResponse'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
+    ResponsesResponse:
+      type: object
+      required:
+      - id
+      - object
+      - model
+      properties:
+        id:
+          type: string
+          example: resp_abc123
+        object:
+          type: string
+          example: response
+        created_at:
+          type: integer
+        model:
+          type: string
+        output_text:
+          type: string
+          description: Convenience text extracted from output content when available.
+        output:
+          type: array
+          items:
+            type: object
+        usage:
+          $ref: '#/components/schemas/Usage'
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema
+    ResponseFormat:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - text
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - json_object
+      - type: object
+        required:
+        - type
+        - json_schema
+        properties:
+          type:
+            type: string
+            enum:
+            - json_schema
+          json_schema:
+            type: object
+            required:
+            - name
+            - schema
+            properties:
+              name:
+                type: string
+              strict:
+                type: boolean
+                default: false
+              schema:
+                type: object
+                description: JSON Schema
+    ResponsesRequest:
+      type: object
+      required:
+      - model
+      - input
+      properties:
+        model:
+          type: string
+          example: llama-3.3-70b
+        input:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: object
+        instructions:
+          type: string
+          description: System-level instruction text mapped into a chat system message.
+        stream:
+          type: boolean
+          default: false
+          description: When true, the response is a server-sent event stream.
+        max_output_tokens:
+          type: integer
+          minimum: 1
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        tool_choice:
+          oneOf:
+          - type: string
+            enum:
+            - none
+            - auto
+            - required
+          - type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - function
+              function:
+                type: object
+                properties:
+                  name:
+                    type: string
+        response_format:
+          $ref: '#/components/schemas/ResponseFormat'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: RunInfra API key. Generate at https://runinfra.ai/settings/api-keys
