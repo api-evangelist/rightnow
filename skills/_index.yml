@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/rightnow-openapi.json operations + runinfra.ai cookbook
+api: RunInfra Inference API
+base_url: https://api.runinfra.ai/v1
+note: >-
+  Agent Skills generated from real RunInfra operationIds. No provider-published
+  skills/AGENTS.md was found; these are grounded proposals. RunInfra does publish
+  an AI onboarding prompt at /docs/ai-onboarding/prompt-block.md.
+skills:
+- name: rag-pipeline
+  file: rightnow-rag-pipeline.md
+  description: Retrieval-augmented generation using embeddings, rerank, and chat completions.
+  operations: [createEmbedding, createRerank, createChatCompletion]
+- name: streaming-chat
+  file: rightnow-streaming-chat.md
+  description: Stream a chat completion token-by-token over SSE with idempotent retries.
+  operations: [createChatCompletion, listModels]
+- name: audio-transcription
+  file: rightnow-audio-transcription.md
+  description: Transcribe an audio file to text with an OpenAI-compatible endpoint.
+  operations: [createTranscription, listModels]

@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: searched
+source: https://runinfra.ai/docs/changelog.md
+scheme: date-based
+current: '2026-07-20'
+url: https://runinfra.ai/docs/changelog
+entries:
+- date: '2026-07-20'
+  breaking: false
+  highlights:
+  - Guided template by default in the composer
+  - Default session tabs (Optimization, Plan, Test, Deploy)
+  - Opt-in daily billing digest
+  - Itemized run-failure reasons
+- date: '2026-07-16'
+  breaking: false
+  highlights:
+  - Runs settle to measured outputs
+  - Downgrades reduce charges
+  - Phase failures no longer block runs
+- date: '2026-07-15'
+  breaking: false
+  highlights:
+  - Session benchmarks and experiment comparison lab
+  - Keyboard shortcuts, consolidated result cards, KPI band visualization
+- date: '2026-07-14'
+  breaking: false
+  highlights:
+  - Warm Test comparisons
+  - Itemized spend breakdown
+  - Large-model pricing tiers, capacity warnings at intake
+- date: '2026-07-12'
+  breaking: false
+  highlights:
+  - Scalable Kubernetes manifests, protected ingress
+  - Safer generated code, Test Set recovery improvements
+- date: '2026-07-08'
+  breaking: false
+  highlights:
+  - Free signup credits doubled to $10
+  - Optimization runbooks published across modalities

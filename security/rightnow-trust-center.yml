@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+source: https://runinfra.ai/security
+url: https://runinfra.ai/security
+certifications:
+- SOC 2
+- HIPAA
+- GDPR
+evidence:
+- source: https://runinfra.ai/security
+  keywords:
+  - soc 2
+  - soc2
+  - hipaa
+  - trust center
+  - gdpr

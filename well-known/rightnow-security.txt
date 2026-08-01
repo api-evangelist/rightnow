@@ -1,0 +1,9 @@
+# RunInfra security policy — RFC 9116
+# Report vulnerabilities or security concerns to the contact below.
+
+Contact: mailto:security@rightnowai.co
+Contact: https://runinfra.ai/contact
+Expires: 2027-06-30T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://runinfra.ai/.well-known/security.txt
+Policy: https://runinfra.ai/security

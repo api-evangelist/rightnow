@@ -1,0 +1,26 @@
+{
+  "provider": "rightnow",
+  "sources": [
+    "rightnow-audio-api-openapi.yml",
+    "rightnow-chat-api-openapi.yml",
+    "rightnow-embeddings-api-openapi.yml",
+    "rightnow-images-api-openapi.yml",
+    "rightnow-models-api-openapi.yml",
+    "rightnow-rerank-api-openapi.yml",
+    "rightnow-responses-api-openapi.yml"
+  ],
+  "outputs": [
+    "rightnow-audio-api-openapi.yml",
+    "rightnow-chat-api-openapi.yml",
+    "rightnow-embeddings-api-openapi.yml",
+    "rightnow-images-api-openapi.yml",
+    "rightnow-models-api-openapi.yml",
+    "rightnow-rerank-api-openapi.yml",
+    "rightnow-responses-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

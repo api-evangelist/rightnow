@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://runinfra.ai/docs/changelog.md + https://status.runinfra.ai/ +
+  openapi/rightnow-openapi.json
+api: RunInfra Inference API
+versioning:
+  scheme: date-based
+  current: '2026-04-24'
+  base_path: /v1
+  notes: OpenAPI info.version carries a dated string; API surface is versioned under /v1.
+deprecation:
+  policy_documented: true
+  detail: >-
+    Pipeline-scoped API keys are documented as legacy in favor of workspace-scoped
+    keys; the /responses endpoint is a compatibility adapter over chat-completions
+    deployments. No dated Sunset/Deprecation (RFC 8594) headers observed.
+  sunset_header: not observed
+  deprecated_operations: []
+status_page:
+  url: https://status.runinfra.ai/
+sla:
+  documented: partial
+  detail: Uptime and infrastructure covered in the Infrastructure FAQ; no numeric SLA published on the public docs.
+changelog:
+  url: https://runinfra.ai/docs/changelog
+  artifact: changelog/rightnow-changelog.yml

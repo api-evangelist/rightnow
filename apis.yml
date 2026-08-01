@@ -1,22 +1,255 @@
 aid: rightnow
-name: Rightnow
-description: Rightnow is a company surfaced as a portfolio company of y-combinator and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+name: RightNow AI
+description: >-
+  RightNow AI (RunInfra) turns plain-English descriptions of an inference
+  workload into production, OpenAI-compatible AI endpoints. The platform
+  selects open-source models from Hugging Face, benchmarks GPU options,
+  applies kernel optimizations (quantization, speculative decoding, KV-cache
+  tuning, Forge kernels), and deploys serverless, pay-per-token inference
+  APIs on RunInfra Cloud, RunPod, Modal, or self-hosted GPUs. Its REST API is
+  OpenAI-shaped and covers chat completions, responses, embeddings, rerank,
+  image generation, audio speech and transcription, and model listing. A
+  Y Combinator-backed research lab, RightNow AI also publishes open-source
+  GPU-kernel and inference tooling.
 url: https://raw.githubusercontent.com/api-evangelist/rightnow/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
-specificationVersion: '0.20'
-created: '2026-07-17'
-modified: '2026-07-17'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Machine Learning
+- LLM Inference
+- GPU
+- Model Deployment
+- Serverless
+- OpenAI Compatible
+- Embeddings
+- MLOps
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://runinfra.ai/favicon.ico
+specificationVersion: '0.20'
+created: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1
+apis:
+- aid: rightnow:rightnow-audio-api
+  name: RightNow AI Audio API
+  description: The Audio API from RightNow AI — 2 operation(s) for audio.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Audio
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-audio-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-chat-api
+  name: RightNow AI Chat API
+  description: The Chat API from RightNow AI — 1 operation(s) for chat.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Chat
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-chat-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-embeddings-api
+  name: RightNow AI Embeddings API
+  description: The Embeddings API from RightNow AI — 1 operation(s) for embeddings.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-embeddings-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-images-api
+  name: RightNow AI Images API
+  description: The Images API from RightNow AI — 1 operation(s) for images.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-images-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-models-api
+  name: RightNow AI Models API
+  description: The Models API from RightNow AI — 2 operation(s) for models.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-models-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-rerank-api
+  name: RightNow AI Rerank API
+  description: The Rerank API from RightNow AI — 1 operation(s) for rerank.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Rerank
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-rerank-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-responses-api
+  name: RightNow AI Responses API
+  description: The Responses API from RightNow AI — 1 operation(s) for responses.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-responses-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: TrustCenter
+  url: security/rightnow-trust-center.yml
+- type: DomainSecurity
+  url: security/rightnow-domain-security.yml
+- type: DeveloperPortal
+  url: https://runinfra.ai/docs
+- type: Documentation
+  url: https://runinfra.ai/docs
+- type: APIReference
+  url: https://runinfra.ai/docs/api-reference/introduction
+- type: GettingStarted
+  url: https://runinfra.ai/docs/introduction/quickstart
+- type: Quickstart
+  url: https://runinfra.ai/docs/introduction/quickstart
+- type: SignUp
+  url: https://runinfra.ai/sign-up
+- type: Login
+  url: https://runinfra.ai/sign-in
+- type: Pricing
+  url: https://runinfra.ai/pricing
+- type: Blog
+  url: https://runinfra.ai/news
+- type: GitHubOrganization
+  url: https://github.com/RightNow-AI
+- type: Support
+  url: https://runinfra.ai/contact
+- type: TermsOfService
+  url: https://runinfra.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://runinfra.ai/privacy-policy
+- type: StatusPage
+  url: https://status.runinfra.ai/
+- type: Twitter
+  url: https://x.com/runinfrai
+- type: LinkedIn
+  url: https://www.linkedin.com/showcase/runinfra/
+- type: LLMsTxt
+  url: llms/rightnow-llms.txt
+- type: WellKnown
+  url: well-known/rightnow-well-known.yml
+- type: SecurityTxt
+  url: well-known/rightnow-security.txt
+- type: SDKs
+  url: packages/rightnow-packages.yml
+- type: Packages
+  url: packages/rightnow-packages.yml
+- type: Conformance
+  url: conformance/rightnow-conformance.yml
+- type: Lifecycle
+  url: lifecycle/rightnow-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/rightnow-lifecycle.yml
+- type: ChangeLog
+  url: changelog/rightnow-changelog.yml
+- type: Compliance
+  url: conformance/rightnow-conformance.yml
+- type: Security
+  url: security/rightnow-vulnerability-disclosure.yml

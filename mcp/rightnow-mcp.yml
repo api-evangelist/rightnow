@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/rightnow-openapi.json
+note: >-
+  No official hosted/remote RunInfra MCP server was found (docs, GitHub org, MCP
+  registries). This is a DERIVED candidate tool list mapped from the OpenAI-compatible
+  REST operations, offered as a proposal — not a published server.
+api: RunInfra Inference API
+base_url: https://api.runinfra.ai/v1
+auth:
+  type: bearer
+  header: Authorization
+tools:
+- name: create_chat_completion
+  operationId: createChatCompletion
+  method: POST
+  path: /chat/completions
+  description: OpenAI-compatible chat completion with streaming, tools, structured output.
+- name: create_response
+  operationId: createResponse
+  method: POST
+  path: /responses
+  description: Responses-shaped adapter over chat-completions deployments.
+- name: create_embedding
+  operationId: createEmbedding
+  method: POST
+  path: /embeddings
+  description: Vector embeddings for semantic search, RAG, and clustering.
+- name: rerank_documents
+  operationId: createRerank
+  method: POST
+  path: /rerank
+  description: Text and multimodal document reranking.
+- name: create_image
+  operationId: createImage
+  method: POST
+  path: /images/generations
+  description: Text-to-image generation.
+- name: create_transcription
+  operationId: createTranscription
+  method: POST
+  path: /audio/transcriptions
+  description: Speech-to-text transcription (multipart upload).
+- name: create_speech
+  operationId: createSpeech
+  method: POST
+  path: /audio/speech
+  description: Text-to-speech synthesis (binary response).
+- name: list_models
+  operationId: listModels
+  method: GET
+  path: /models
+  description: List verified deployed models in the workspace.
+- name: retrieve_model
+  operationId: retrieveModel
+  method: GET
+  path: /models/{model}
+  description: Retrieve a single deployed model by id.

@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/rightnow-openapi.json + https://runinfra.ai/docs + trust.rightnowai.co +
+  https://runinfra.ai/security
+api: RunInfra Inference API
+standards:
+- id: openai-compatible
+  conforms: true
+  evidence: OpenAI-shaped HTTP API; /v1/chat/completions, /v1/embeddings, /v1/models etc. usable with OpenAI SDKs.
+- id: oauth2
+  conforms: false
+  evidence: Auth is HTTP bearer API key (rp_live_), not OAuth2. No authorization/token endpoints.
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration (404).
+- id: rfc9457
+  conforms: false
+  evidence: Errors use OpenAI-style {error:{message,type,code,param}}, not application/problem+json.
+- id: idempotency
+  conforms: true
+  evidence: Idempotency-Key header honored; 409 on key reuse with a different body, 422 on non-replayable responses.
+- id: rate-limit-headers
+  conforms: true
+  evidence: X-RateLimit-Limit/Remaining/Reset/Tier + Retry-After on 429 and 503.
+- id: sse-streaming
+  conforms: true
+  evidence: Server-sent events for streaming completions and optimization sessions; documented event catalog.
+- id: soc2
+  conforms: true
+  evidence: SOC 2 Type II listed as Compliant at trust.rightnowai.co (25 policies, 35 monitored controls).
+- id: hipaa
+  conforms: true
+  evidence: HIPAA referenced on https://runinfra.ai/security.
+- id: gdpr
+  conforms: true
+  evidence: GDPR referenced on https://runinfra.ai/security; DPA published at /dpa.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare data API.
+- id: scim
+  conforms: false
+  evidence: No SCIM user-provisioning surface.
+- id: odata
+  conforms: false
+  evidence: Not an OData service.
+compliance_programs:
+- SOC 2 Type II
+- HIPAA
+- GDPR

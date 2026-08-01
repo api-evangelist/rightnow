@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/RightNow-AI/runinfra-sdk + npm + PyPI
+packages:
+- name: "@runinfra/sdk"
+  registry: npm
+  official: true
+  language: TypeScript
+  version: 0.2.0
+  install: npm install @runinfra/sdk
+  url: https://www.npmjs.com/package/@runinfra/sdk
+  repository: https://github.com/RightNow-AI/runinfra-sdk
+  description: >-
+    Official RunInfra SDK for optimized inference deployments across text,
+    embeddings, image, and audio routes. Scoped API keys, request IDs,
+    replay-safe retries, deployment-gated audio/image helpers, webhook
+    verification.
+- name: runinfra
+  registry: PyPI
+  official: true
+  language: Python
+  version: 0.2.0
+  install: pip install runinfra
+  url: https://pypi.org/project/runinfra/
+  repository: https://github.com/RightNow-AI/runinfra-sdk
+  description: >-
+    Official RunInfra Python SDK for optimized inference deployments across
+    text, embeddings, image, and audio routes.
+notes: >-
+  RunInfra is also OpenAI-compatible, so the official openai Python/JS clients,
+  LangChain, LlamaIndex, and the Vercel AI SDK work against the base URL
+  https://api.runinfra.ai/v1 (documented, not first-party RunInfra packages).

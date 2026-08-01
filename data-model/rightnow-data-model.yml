@@ -1,0 +1,64 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rightnow-openapi.json (components.schemas + request/response refs)
+api: RunInfra Inference API
+entities:
+- name: Model
+  description: A verified deployed model (pipeline) in a workspace; addressed by model id.
+  key: id
+- name: ChatCompletion
+  description: Result of POST /v1/chat/completions; references a model and carries Usage.
+- name: ChatCompletionChunk
+  description: Streaming SSE delta of a chat completion.
+- name: Response
+  description: Result of POST /v1/responses (Responses-shaped adapter over chat deployments).
+- name: Embedding
+  description: Vector embedding result of POST /v1/embeddings.
+- name: RerankResult
+  description: Scored/ordered documents from POST /v1/rerank.
+- name: Image
+  description: Generated image from POST /v1/images/generations.
+- name: Transcription
+  description: Speech-to-text result from POST /v1/audio/transcriptions.
+- name: Usage
+  description: Token accounting embedded in completion/response objects.
+- name: Error
+  description: OpenAI-style error envelope returned on 4xx/5xx.
+relationships:
+- from: ChatCompletion
+  type: belongs_to
+  to: Model
+  via: model
+- from: ChatCompletion
+  type: has_one
+  to: Usage
+  via: usage
+- from: Response
+  type: belongs_to
+  to: Model
+  via: model
+- from: Embedding
+  type: belongs_to
+  to: Model
+  via: model
+- from: RerankResult
+  type: belongs_to
+  to: Model
+  via: model
+- from: Image
+  type: belongs_to
+  to: Model
+  via: model
+- from: Transcription
+  type: belongs_to
+  to: Model
+  via: model
+- from: ChatCompletion
+  type: has_many
+  to: ToolCall
+  via: tool_calls
+notes: >-
+  Model is the hub entity: every inference request references a deployed model by
+  id (or a pipeline-scoped key binds the pipeline via the URL path). Ids are
+  workspace-scoped; no global id-prefix scheme is documented beyond API key
+  prefix rp_live_.

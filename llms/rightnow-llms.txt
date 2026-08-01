@@ -1,0 +1,82 @@
+# RunInfra
+
+> Plain English to production AI inference endpoints. RunInfra selects models, benchmarks GPUs, applies kernel optimizations, and deploys OpenAI-compatible APIs.
+
+## Docs
+
+- [AI onboarding prompt](https://runinfra.ai/docs/ai-onboarding/prompt-block.md): Copy-paste prompt for any LLM. Teaches your AI assistant how to ship code against RunInfra correctly.
+- [Audio](https://runinfra.ai/docs/api-reference/audio.md): POST /v1/audio/speech and /v1/audio/transcriptions, text-to-speech and speech-to-text.
+- [Authentication](https://runinfra.ai/docs/api-reference/authentication.md): API key scopes, creation, rotation, and expiration for the RunInfra inference API.
+- [Chat completions](https://runinfra.ai/docs/api-reference/chat-completions.md): POST /v1/chat/completions, OpenAI-compatible chat with streaming, tools, and structured output.
+- [Embeddings](https://runinfra.ai/docs/api-reference/embeddings.md): POST /v1/embeddings, vector embeddings for semantic search, RAG, and clustering.
+- [Error codes](https://runinfra.ai/docs/api-reference/errors.md): HTTP status codes RunInfra returns, what causes them, and how to recover.
+- [API reference](https://runinfra.ai/docs/api-reference/introduction.md): OpenAI-compatible inference API. Set base_url once, reach verified deployments with a workspace-scoped key or a pipeline-scoped key.
+- [Models](https://runinfra.ai/docs/api-reference/models.md): GET /v1/models - list verified deployed models in your workspace.
+- [Rate limits](https://runinfra.ai/docs/api-reference/rate-limits.md): Per-key request budgets, response headers, 429 behavior, and how to raise limits.
+- [Responses](https://runinfra.ai/docs/api-reference/responses.md): POST /v1/responses, a Responses-shaped compatibility adapter over RunInfra chat-completions deployments.
+- [SSE events](https://runinfra.ai/docs/api-reference/sse-events.md): Server-sent event types fired by RunInfra during optimization sessions, chat streams, and infra activity. Covers event names, payload shapes, heartbeat rules, and reconnection patterns.
+- [Changelog](https://runinfra.ai/docs/changelog.md): Customer-facing RunInfra releases, feature launches, and platform updates, newest first.
+- [Cookbook](https://runinfra.ai/docs/cookbook/overview.md): Copy-paste recipes for common RunInfra inference patterns. Recipes require a key and a deployment that supports the selected route.
+- [Retrieval-augmented generation](https://runinfra.ai/docs/cookbook/rag.md): Embed, retrieve, generate. A complete RAG loop in 30 lines using two RunInfra pipelines.
+- [Streaming responses](https://runinfra.ai/docs/cookbook/streaming.md): Token-by-token responses with the OpenAI SDK. Server-sent events over HTTPS, same format as OpenAI.
+- [Structured output](https://runinfra.ai/docs/cookbook/structured-output.md): Constrain JSON responses with response_format. Available on deployments whose serving engine supports JSON-schema decoding.
+- [Tool calling](https://runinfra.ai/docs/cookbook/tool-calling.md): Function calling with typed arguments. Model picks a tool, you run it, feed the result back. Multi-turn loop.
+- [Autoscaling](https://runinfra.ai/docs/deployments/autoscaling.md): How RunInfra replicas scale up and down with traffic. Flex scale-to-zero or Active always-on, with concurrency, queue depth, and cost-latency math.
+- [Instant Start](https://runinfra.ai/docs/deployments/instant-start.md): RunInfra's weight-caching layer that keeps cold starts fast on scale-to-zero deployments. Covers the cache architecture, eviction rules, multi-GPU sync, and the parts of cold start it does not eliminate.
+- [Deployments overview](https://runinfra.ai/docs/deployments/overview.md): Deploy optimized RunInfra pipelines as production APIs with supported OpenAI-compatible endpoint shapes. Two modes, fast cold starts, and usage-based billing.
+- [Speculative decoding](https://runinfra.ai/docs/deployments/speculation.md): A small draft model proposes tokens, the target model verifies them in a single pass. Higher throughput with no quality change.
+- [Deployment targets](https://runinfra.ai/docs/deployments/targets.md): Where RunInfra can ship your pipeline: managed RunInfra Cloud (default), your own RunPod account (bring your own cloud), self-hosted Modal, or a custom GPU you bring.
+- [Deploy to your own RunPod](https://runinfra.ai/docs/deployments/your-runpod.md): Bring your own cloud: deploy an optimized LLM or embedding model to your own RunPod account. You control and pay for the GPU; RunInfra serves the optimized endpoint for free on Core and above.
+- [Account and access](https://runinfra.ai/docs/faq/account.md): FAQ about sign up, API keys, workspaces, seats, and dashboard access.
+- [Billing](https://runinfra.ai/docs/faq/billing.md): FAQ about the unified credit balance, token pricing, optimization run cost, invoices, and credits.
+- [Infrastructure](https://runinfra.ai/docs/faq/infrastructure.md): FAQ about GPUs, regions, data residency, uptime, and security.
+- [Models and inference](https://runinfra.ai/docs/faq/models-inference.md): FAQ about supported models, quantization, context windows, streaming, tool calling, and fine-tuning.
+- [GPUs and pricing](https://runinfra.ai/docs/features/gpu-pricing.md): RunInfra bills deployed inference per million tokens. Understand how GPU selection, deployment mode, model size, and paid GPU work affect your cost.
+- [Image generation](https://runinfra.ai/docs/features/image-generation.md): Text-to-image inference on RunInfra: FLUX, SDXL, and Stable Diffusion 3.5 served through a Diffusers FastAPI runtime with torchao FP8 + torch.compile on Ada / Hopper / Blackwell GPUs.
+- [Models](https://runinfra.ai/docs/features/models.md): RunInfra supports thousands of LLMs, embeddings, rerankers, vision-language, speech-to-text, and text-to-speech models from Hugging Face, with custom model upload available on a paid Core plan.
+- [Monitoring](https://runinfra.ai/docs/features/monitoring.md): Track requests, latency percentiles, throughput, token usage, and cost across all your RunInfra endpoints from a single real-time dashboard.
+- [Optimization](https://runinfra.ai/docs/features/optimization.md): GPU profiling, quantized-variant search, Forge kernels, and speculation. The RunInfra optimizer picks the right configuration so you don't have to.
+- [Session workspace](https://runinfra.ai/docs/features/session-workspace.md): Use a pipeline session to run benchmarks, compare candidates, read optimization results, and move between session views.
+- [Build with RunInfra](https://runinfra.ai/docs/index.md): Plain English to production AI endpoints.
+- [LangChain](https://runinfra.ai/docs/integrations/langchain.md): Use RunInfra as the LLM provider for any LangChain application. One-line config change.
+- [LlamaIndex](https://runinfra.ai/docs/integrations/llamaindex.md): Use RunInfra as the LLM and embedding provider in any LlamaIndex pipeline.
+- [Using RunInfra with other libraries](https://runinfra.ai/docs/integrations/overview.md): Verified framework integrations for RunInfra's supported OpenAI-compatible endpoints.
+- [Vercel AI SDK](https://runinfra.ai/docs/integrations/vercel-ai-sdk.md): Use RunInfra with the Vercel AI SDK. Works with Next.js, SvelteKit, Nuxt, and Remix.
+- [Which model should I use?](https://runinfra.ai/docs/introduction/model-picker.md): Pick the right model for your use case. Decision table by task, size, and performance priority.
+- [Plans and pricing](https://runinfra.ai/docs/introduction/plans.md): Compare the Core (self-serve, custom $50-$1000/mo) and Enterprise plans, the unified credit balance, free starting credits, and token pricing.
+- [Quickstart](https://runinfra.ai/docs/introduction/quickstart.md): Create an account, describe your pipeline, optimize it, and deploy a live OpenAI-compatible inference endpoint, all without writing infrastructure code.
+- [What is RunInfra?](https://runinfra.ai/docs/introduction/welcome.md): RunInfra turns plain English into production AI inference endpoints. Describe your use case and the AI agent builds, optimizes, and deploys it for you.
+- [News](https://runinfra.ai/docs/news/overview.md): Announcements, product notes, research updates, and engineering posts from the RunInfra team. Subscribe via RSS or Atom.
+- [Prompting best practices](https://runinfra.ai/docs/prompting/best-practices.md): Learn what to include in every RunInfra prompt so the agent builds the right pipeline the first time, without back-and-forth clarification.
+- [Debugging](https://runinfra.ai/docs/prompting/debugging.md): Fix common RunInfra issues: wrong model selection, poor optimization results, slow cold starts, and failed deployments, with direct corrective prompts.
+- [Example prompts](https://runinfra.ai/docs/prompting/example-prompts.md): Copy-ready prompts for chatbots, summarizers, code generation, multilingual APIs, and more, with notes on what the RunInfra agent builds for each.
+- [Benchmarks methodology](https://runinfra.ai/docs/reference/benchmarks-methodology.md): How the numbers on runinfra.ai/benchmarks are measured, labeled, and published. Receipts, provenance flags, the quality composite, the cost basis, and what the page does not claim.
+- [Glossary](https://runinfra.ai/docs/reference/glossary.md): RunInfra domain terms in one page. GPU, quantization, serving, and agent vocabulary.
+- [Research](https://runinfra.ai/docs/research/overview.md): Open papers from the RunInfra team on attention efficiency, LLM inference, kernel optimization, and the architectures behind production AI infrastructure.
+- [ASR optimization runbook](https://runinfra.ai/docs/runbooks/asr.md): Speech-to-text optimization techniques, quality gates, verification paths, and rollback controls.
+- [Audio-LM and voice-pipeline optimization runbook](https://runinfra.ai/docs/runbooks/audio-lm.md): Optimization targets for audio-language models and co-located voice pipelines.
+- [Customer optimization overrides](https://runinfra.ai/docs/runbooks/customer-overrides.md): How to customize optimization choices with force-quantization, skip-technique, budget, latency, and quality controls.
+- [Embedding optimization runbook](https://runinfra.ai/docs/runbooks/embedding.md): How RunInfra optimizes embedding deployments while preserving retrieval quality across runtime selection, batching, gated multi-replica posture, Matryoshka truncation, pooling, normalization, and recall gates.
+- [Image generation optimization runbook](https://runinfra.ai/docs/runbooks/image-gen.md): How RunInfra evaluates image generation optimizations for diffusion and DiT pipelines, including precision, compilation, scheduler choice, step distillation, quality gates, and rollback controls.
+- [LLM optimization runbook](https://runinfra.ai/docs/runbooks/llm.md): Serving, quantization, cache, speculation, and expert-parallel optimization for autoregressive language models.
+- [Load testing optimized deployments](https://runinfra.ai/docs/runbooks/load-testing.md): How to plan high-concurrency tests for each modality and interpret the results.
+- [Per-modality optimization runbooks](https://runinfra.ai/docs/runbooks/overview.md): How RunInfra chooses optimization techniques for each model modality and how to verify deployed results.
+- [SLO dashboards and regression alerts](https://runinfra.ai/docs/runbooks/slo-alerts.md): Suggested production monitoring for optimized RunInfra deployments.
+- [TTS optimization runbook](https://runinfra.ai/docs/runbooks/tts.md): Text-to-speech optimization techniques, quality gates, verification paths, and rollback controls.
+- [Video generation optimization runbook](https://runinfra.ai/docs/runbooks/video-gen.md): Modal Diffusers hosting, video cache optimization, and production-certification gates for video-generation deployments.
+- [Vision-language optimization runbook](https://runinfra.ai/docs/runbooks/vision-language.md): Multimodal prefix cache, concurrency caps, sequence ceilings, and image-bearing benchmarks for vision-language deployments.
+- [Idea to pipeline](https://runinfra.ai/docs/tips/from-idea-to-pipeline.md): Walk through every step of building, optimizing, deploying, and integrating a RunInfra AI pipeline, from blank page to production endpoint.
+- [Troubleshooting](https://runinfra.ai/docs/tips/troubleshooting.md): Fix common issues with RunInfra pipeline building, optimization, deployment, and API integration, organized by category for fast diagnosis.
+- [OpenAI compatibility](https://runinfra.ai/docs/tools-sdks/openai-compatibility.md): RunInfra exposes an OpenAI-shaped HTTP API for verified deployment endpoints. Use supported OpenAI clients with a RunInfra base URL, API key, and deployed model ID.
+- [RunInfra SDK](https://runinfra.ai/docs/tools-sdks/runinfra-sdk.md): Use the native RunInfra TypeScript and Python SDKs for optimized deployment access, scoped API keys, request IDs, replay-safe retries, deployment-gated audio and image helpers, and webhook verification.
+- [AI assistants](https://runinfra.ai/docs/use-cases/ai-assistant.md): Personal assistants on the open models you own. Llama, Hermes, Qwen with tool use, policy, and streaming on a single GPU.
+- [Document AI](https://runinfra.ai/docs/use-cases/document-ai.md): Open vision-language models parsing PDFs, forms, and tables into structured JSON. Per-page billed becomes per-million-tokens.
+- [Embeddings and reranking](https://runinfra.ai/docs/use-cases/embeddings.md): BGE, E5, GTE, Nomic. Encoder and cross-encoder reranker fused on one GPU in a single round-trip.
+- [Use cases](https://runinfra.ai/docs/use-cases/overview.md): Six pre-built workflows you can fork in chat: voice agents, AI assistants, embeddings, RAG search, document AI, and transcription. Each ships with its own model stack, optimization recipe, and benchmark targets.
+- [RAG search](https://runinfra.ai/docs/use-cases/rag-search.md): Cited Q&A you can audit on your own corpus. Hybrid retrieval, grounded generation, and citation spans.
+- [Transcription](https://runinfra.ai/docs/use-cases/transcription.md): Deploy open Whisper for speech-to-text on your own stack with an OpenAI-compatible transcription endpoint.
+- [Voice agents](https://runinfra.ai/docs/use-cases/voice-agent.md): Sub-600ms turn-taking on a single L40S. Streaming speech-to-text, an open LLM, and streaming text-to-speech fused on one GPU.
+
+## OpenAPI Specs
+
+- [openapi](https://runinfra.ai/docs/api-reference/openapi.json)

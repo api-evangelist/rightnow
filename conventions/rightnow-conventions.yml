@@ -1,0 +1,57 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://runinfra.ai/docs/api-reference/* (authentication, rate-limits, errors,
+  responses) + openapi/rightnow-openapi.json
+api: RunInfra Inference API
+base_url: https://api.runinfra.ai/v1
+auth:
+  style: bearer
+  header: 'Authorization: Bearer <api-key>'
+  key_prefix: rp_live_
+  key_scopes: [workspace-scoped, pipeline-scoped]
+  storage: keys shown once; server stores SHA-256 hash; constant-time comparison
+  rotation: grace period where old and new keys both work
+  expiration: optional expires_at; daily cron revokes expired keys
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  behavior: >-
+    Reusing an Idempotency-Key with the same body replays the prior result;
+    reusing it with a different body returns 409; a response too large to replay
+    returns 422. Recommended for charge-bearing calls (embeddings, images,
+    binary/multipart) instead of broad automatic retries.
+  conflict_status: 409
+versioning:
+  style: date-based
+  header: none documented (OpenAPI info.version is a dated string, e.g. 2026-04-24)
+  base_path: /v1
+error_envelope:
+  format: openai-error-object
+  field: error
+  ref: errors/rightnow-problem-types.yml
+rate_limiting:
+  model: leaky-bucket (per-key), not a flat per-minute counter
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - X-RateLimit-Tier
+  - Retry-After
+  retry_after: seconds to wait, sent on 429 and 503
+  limits:
+    core: 5000/min default, 10000/min ceiling
+    enterprise: 50000/min default, 100000/min ceiling
+tracing:
+  request_id_header: X-Request-Id
+  guidance: capture on 5xx for support
+streaming:
+  style: server-sent events (SSE)
+  compatibility: same wire format as OpenAI; SSE event catalog documented at /docs/api-reference/sse-events
+compatibility:
+  shape: OpenAI-compatible HTTP API
+  clients: [openai-python, openai-node, langchain, llamaindex, vercel-ai-sdk, "@runinfra/sdk", runinfra]
+cross_links:
+  errors: errors/rightnow-problem-types.yml
+  lifecycle: lifecycle/rightnow-lifecycle.yml
+  authentication: authentication/rightnow-authentication.yml

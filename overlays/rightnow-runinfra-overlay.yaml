@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the RunInfra Inference API
+  version: 1.0.0
+extends: ../openapi/rightnow-openapi.json
+x-generated: '2026-07-21'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass — enhancements derived from runinfra.ai docs
+  (conventions, rate-limits, errors, changelog) layered onto the published spec.
+actions:
+- target: $.info
+  description: Annotate provider identity and enrichment provenance.
+  update:
+    x-provider: RightNow AI (RunInfra)
+    x-api-evangelist-aid: rightnow
+    x-versioning: date-based
+    x-openai-compatible: true
+- target: $.info
+  description: Record cross-cutting conventions captured during enrichment.
+  update:
+    x-conventions:
+      idempotency_header: Idempotency-Key
+      rate_limit_headers:
+      - X-RateLimit-Limit
+      - X-RateLimit-Remaining
+      - X-RateLimit-Reset
+      - X-RateLimit-Tier
+      - Retry-After
+      request_id_header: X-Request-Id
+      error_envelope: openai-error-object
+      streaming: server-sent-events
+- target: $.components.securitySchemes.bearerAuth
+  description: Note the documented API key prefix and scoping model.
+  update:
+    x-key-prefix: rp_live_
+    x-key-scopes:
+    - workspace-scoped
+    - pipeline-scoped
+- target: $
+  description: Reference the compliance posture surfaced from the trust center.
+  update:
+    x-compliance:
+    - SOC 2 Type II
+    - HIPAA
+    - GDPR

@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/rightnow-openapi.json + https://runinfra.ai/docs/api-reference/errors.md
+format: openai-error-object
+envelope:
+  field: error
+  shape:
+    error:
+      message: Human-readable description
+      type: machine-readable type string
+      code: specific error code
+      param: offending field name (nullable)
+note: >-
+  RunInfra returns OpenAI-style error objects, NOT RFC 9457 application/problem+json.
+  Capture X-Request-Id for support on 5xx.
+problem_types:
+- status: 400
+  code: unsupported_backend_modality
+  title: Backend cannot serve requested model/modality
+  remediation: Choose one of the compatible backends shown in the dashboard.
+- status: 400
+  code: hf_model_access_required
+  title: Hugging Face access restrictions
+  remediation: Accept the model terms and configure token access.
+- status: 400
+  code: remote_code_approval_required
+  title: Custom code requires approval
+  remediation: Review the repository and enable remote code only if trusted.
+- status: 400
+  code: bad_request
+  title: Malformed request
+  remediation: Fix invalid JSON, missing fields, or wrong content-type; do not retry.
+- status: 401
+  title: Invalid or missing API key
+  remediation: Rotate the key at Settings > API Keys.
+- status: 402
+  title: Insufficient credits
+  remediation: Top up at Settings > Cost.
+- status: 403
+  title: Request not allowed (scope, plan, or paid-feature gate)
+  remediation: Switch to a workspace key, upgrade the plan, or contact support.
+- status: 404
+  title: Pipeline or model does not exist
+  remediation: Check the resource ID at Deployments.
+- status: 409
+  title: Idempotency conflict
+  remediation: Reuse of an Idempotency-Key with a different body; use a new key for a different request.
+- status: 422
+  title: Cannot process safely / response too large to replay
+  remediation: Use a new Idempotency-Key only when you intend a new inference request.
+- status: 429
+  title: Rate limit exceeded
+  remediation: Respect the Retry-After header and back off exponentially.
+- status: 500
+  title: Server error
+  remediation: Retry once with backoff; capture X-Request-Id if persistent.
+- status: 502
+  title: Bad gateway (upstream serving backend failed)
+  remediation: Retry once; inspect deployment health.
+- status: 503
+  title: Service unavailable (stopped, provisioning, or at capacity)
+  remediation: Respect the Retry-After header.
+- status: 504
+  title: Gateway timeout
+  remediation: Switch to streaming or lower max_tokens.

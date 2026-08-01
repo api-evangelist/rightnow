@@ -1,0 +1,1779 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "RunInfra API",
+    "description": "OpenAI-compatible HTTP API for verified RunInfra inference deployments.",
+    "version": "2026-04-24",
+    "contact": {
+      "name": "RunInfra support",
+      "email": "jaber@runinfra.ai",
+      "url": "https://runinfra.ai/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.runinfra.ai/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/chat/completions": {
+      "post": {
+        "operationId": "createChatCompletion",
+        "summary": "Create chat completion",
+        "description": "OpenAI-compatible chat completion. Supports streaming, tools, and structured output.",
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatCompletionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat completion (or SSE stream if stream=true)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletion"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletionChunk"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/responses": {
+      "post": {
+        "operationId": "createResponse",
+        "summary": "Create response",
+        "description": "Responses-shaped chat-completions compatibility adapter for compatible LLM and vision-language deployments. Does not implement full state, include, reasoning, hosted-tool, conversation-item, or background-job semantics.",
+        "tags": [
+          "Responses"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResponsesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response object or SSE stream if stream=true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsesResponse"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsesEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/embeddings": {
+      "post": {
+        "operationId": "createEmbedding",
+        "summary": "Create embeddings",
+        "description": "Generate vector embeddings for one or more inputs. OpenAI-compatible response shape. Native SDK clients send this request once even when an idempotency key is provided.",
+        "tags": [
+          "Embeddings"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmbeddingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Embedding response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmbeddingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/rerank": {
+      "post": {
+        "operationId": "createRerank",
+        "summary": "Rerank documents",
+        "description": "Text reranking for verified TEI deployments and multimodal document reranking for compatible vLLM vision rerank deployments. Flat workspace requests are replay-safe when an Idempotency-Key is provided; pipeline-scoped rerank helpers are sent once.",
+        "tags": [
+          "Rerank"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RerankRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rerank response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RerankResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/images/generations": {
+      "post": {
+        "operationId": "createImage",
+        "summary": "Generate image",
+        "description": "Generate images from verified image-generation deployments. OpenAI-compatible response shape. Native SDK clients send this request once even when an idempotency key is provided.",
+        "tags": [
+          "Images"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageGenerationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/audio/transcriptions": {
+      "post": {
+        "operationId": "createTranscription",
+        "summary": "Transcribe audio",
+        "description": "Speech-to-text via Whisper-class models. Multipart upload with a non-empty audio file. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries.",
+        "tags": [
+          "Audio"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transcription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transcription"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/audio/speech": {
+      "post": {
+        "operationId": "createSpeech",
+        "summary": "Generate speech",
+        "description": "Text-to-speech served by XTTS, Bark, or Qwen3-TTS depending on the pipeline. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries.",
+        "tags": [
+          "Audio"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpeechRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audio bytes",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "audio/wav": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
+    "/models": {
+      "get": {
+        "operationId": "listModels",
+        "summary": "List models",
+        "description": "List verified deployed models in your workspace.",
+        "tags": [
+          "Models"
+        ],
+        "responses": {
+          "200": {
+            "description": "Model list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelList"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/models/{model}": {
+      "get": {
+        "operationId": "retrieveModel",
+        "summary": "Retrieve model",
+        "description": "Retrieve one verified deployed model by ID.",
+        "tags": [
+          "Models"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model ID returned by GET /v1/models."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Model"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "RunInfra API key. Generate at https://runinfra.ai/settings/api-keys"
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Malformed request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Missing or invalid API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "PaymentRequired": {
+        "description": "Insufficient credits",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Key scope mismatch or plan limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Model or deployment not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Idempotency conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Rate limit exceeded",
+        "headers": {
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait before retrying"
+          },
+          "X-RateLimit-Remaining": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Remaining requests in the window"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Request cannot be replayed or processed safely",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Unexpected gateway error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unavailable": {
+        "description": "Endpoint stopped, provisioning, or at capacity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "BadGateway": {
+        "description": "Upstream serving backend transient failure",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "GatewayTimeout": {
+        "description": "Gateway timeout",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "message",
+              "type"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "param": {
+                "type": "string",
+                "nullable": true
+              },
+              "code": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "ChatCompletionRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "messages"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "Model id returned by GET /v1/models. Pipeline-scoped snippets may use `default` when generated by the dashboard.",
+            "example": "llama-3.3-70b"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            }
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "When true, the response is a server-sent event stream."
+          },
+          "temperature": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 2
+          },
+          "max_tokens": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "top_p": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 1
+          },
+          "n": {
+            "type": "integer",
+            "default": 1
+          },
+          "stop": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 4
+              }
+            ]
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tool"
+            }
+          },
+          "tool_choice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "auto",
+                  "required"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "function"
+                    ]
+                  },
+                  "function": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response_format": {
+            "$ref": "#/components/schemas/ResponseFormat"
+          }
+        }
+      },
+      "ChatMessage": {
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "system",
+              "user",
+              "assistant",
+              "tool"
+            ]
+          },
+          "content": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array"
+              }
+            ]
+          },
+          "tool_calls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ToolCall"
+            }
+          },
+          "tool_call_id": {
+            "type": "string"
+          }
+        }
+      },
+      "Tool": {
+        "type": "object",
+        "required": [
+          "type",
+          "function"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "function"
+            ]
+          },
+          "function": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object",
+                "description": "JSON Schema"
+              }
+            }
+          }
+        }
+      },
+      "ToolCall": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "function"
+            ]
+          },
+          "function": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "arguments": {
+                "type": "string",
+                "description": "JSON-encoded arguments"
+              }
+            }
+          }
+        }
+      },
+      "ResponseFormat": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "text"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "json_object"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "json_schema"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "json_schema"
+                ]
+              },
+              "json_schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "schema"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "strict": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "schema": {
+                    "type": "object",
+                    "description": "JSON Schema"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ChatCompletion": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "created",
+          "model",
+          "choices"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "chatcmpl_abc123"
+          },
+          "object": {
+            "type": "string",
+            "example": "chat.completion"
+          },
+          "created": {
+            "type": "integer"
+          },
+          "model": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "integer"
+                },
+                "message": {
+                  "$ref": "#/components/schemas/ChatMessage"
+                },
+                "finish_reason": {
+                  "type": "string",
+                  "enum": [
+                    "stop",
+                    "length",
+                    "tool_calls",
+                    "content_filter"
+                  ]
+                }
+              }
+            }
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        }
+      },
+      "ChatCompletionChunk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "example": "chat.completion.chunk"
+          },
+          "created": {
+            "type": "integer"
+          },
+          "model": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "integer"
+                },
+                "delta": {
+                  "$ref": "#/components/schemas/ChatMessage"
+                },
+                "finish_reason": {
+                  "type": "string",
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResponsesRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "input"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "llama-3.3-70b"
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            ]
+          },
+          "instructions": {
+            "type": "string",
+            "description": "System-level instruction text mapped into a chat system message."
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "When true, the response is a server-sent event stream."
+          },
+          "max_output_tokens": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "top_p": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tool"
+            }
+          },
+          "tool_choice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "auto",
+                  "required"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "function"
+                    ]
+                  },
+                  "function": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response_format": {
+            "$ref": "#/components/schemas/ResponseFormat"
+          }
+        }
+      },
+      "ResponsesResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "model"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "resp_abc123"
+          },
+          "object": {
+            "type": "string",
+            "example": "response"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "model": {
+            "type": "string"
+          },
+          "output_text": {
+            "type": "string",
+            "description": "Convenience text extracted from output content when available."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        }
+      },
+      "ResponsesEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "response.output_text.delta"
+          },
+          "delta": {
+            "type": "string"
+          },
+          "response": {
+            "$ref": "#/components/schemas/ResponsesResponse"
+          }
+        }
+      },
+      "Usage": {
+        "type": "object",
+        "properties": {
+          "prompt_tokens": {
+            "type": "integer"
+          },
+          "completion_tokens": {
+            "type": "integer"
+          },
+          "total_tokens": {
+            "type": "integer"
+          }
+        }
+      },
+      "EmbeddingRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "input"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "bge-m3"
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "encoding_format": {
+            "type": "string",
+            "enum": [
+              "float",
+              "base64"
+            ],
+            "default": "float"
+          }
+        }
+      },
+      "EmbeddingResponse": {
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "model",
+          "usage"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "example": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "object": {
+                  "type": "string",
+                  "example": "embedding"
+                },
+                "index": {
+                  "type": "integer"
+                },
+                "embedding": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "model": {
+            "type": "string"
+          },
+          "usage": {
+            "type": "object",
+            "properties": {
+              "prompt_tokens": {
+                "type": "integer"
+              },
+              "total_tokens": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "RerankDocument": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object",
+            "required": [
+              "text"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "content"
+            ],
+            "description": "Multimodal document shape for compatible vLLM vision rerank deployments. TEI rerank deployments are text-only.",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "content": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/RerankContentPart"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "RerankContentPart": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "text"
+            ],
+            "properties": {
+              "type": {
+                "const": "text"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "image_url"
+            ],
+            "properties": {
+              "type": {
+                "const": "image_url"
+              },
+              "image_url": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "url"
+                    ],
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "video_url"
+            ],
+            "properties": {
+              "type": {
+                "const": "video_url"
+              },
+              "video_url": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "url"
+                    ],
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "RerankRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "query"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "bge-reranker-v2-m3"
+          },
+          "query": {
+            "type": "string",
+            "example": "What is RunInfra Instant Start?"
+          },
+          "texts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 500
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RerankDocument"
+            },
+            "minItems": 1,
+            "maxItems": 500
+          },
+          "top_n": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Optional number of ranked results to return."
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "texts"
+            ]
+          },
+          {
+            "required": [
+              "documents"
+            ]
+          }
+        ]
+      },
+      "RerankResult": {
+        "type": "object",
+        "required": [
+          "index",
+          "score"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "score": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RerankContentPart"
+            }
+          }
+        }
+      },
+      "RerankScore": {
+        "type": "object",
+        "required": [
+          "index",
+          "score"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "score": {
+            "type": "number"
+          }
+        }
+      },
+      "RerankResponse": {
+        "type": "object",
+        "required": [
+          "object",
+          "model",
+          "scores",
+          "rankings",
+          "results",
+          "document_count"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "example": "runinfra.rerank"
+          },
+          "model": {
+            "type": "string"
+          },
+          "upstream_model": {
+            "type": "string"
+          },
+          "scores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RerankScore"
+            }
+          },
+          "rankings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RerankResult"
+            }
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RerankResult"
+            }
+          },
+          "document_count": {
+            "type": "integer"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        }
+      },
+      "ImageGenerationRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "flux-schnell"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "n": {
+            "type": "integer",
+            "default": 1,
+            "minimum": 1,
+            "maximum": 4
+          },
+          "size": {
+            "type": "string",
+            "example": "1024x1024"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "url",
+              "b64_json"
+            ],
+            "default": "b64_json"
+          }
+        }
+      },
+      "ImageGenerationResponse": {
+        "type": "object",
+        "required": [
+          "created",
+          "data"
+        ],
+        "properties": {
+          "created": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "b64_json": {
+                  "type": "string"
+                },
+                "revised_prompt": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        }
+      },
+      "TranscriptionRequest": {
+        "type": "object",
+        "required": [
+          "file",
+          "model"
+        ],
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Non-empty audio file (mp3, wav, m4a, flac, webm, ogg)."
+          },
+          "model": {
+            "type": "string",
+            "example": "whisper-large-v3"
+          },
+          "language": {
+            "type": "string",
+            "description": "ISO-639-1 code"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "text",
+              "srt",
+              "vtt",
+              "verbose_json"
+            ],
+            "default": "json"
+          },
+          "temperature": {
+            "type": "number",
+            "default": 0
+          }
+        }
+      },
+      "Transcription": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "SpeechRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "input"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "kokoro"
+          },
+          "input": {
+            "type": "string"
+          },
+          "voice": {
+            "type": "string"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "mp3",
+              "wav",
+              "flac",
+              "opus",
+              "aac",
+              "pcm"
+            ],
+            "default": "mp3"
+          },
+          "speed": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0.25,
+            "maximum": 4
+          }
+        }
+      },
+      "ModelList": {
+        "type": "object",
+        "required": [
+          "object",
+          "data"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "example": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Model"
+            }
+          }
+        }
+      },
+      "Model": {
+        "type": "object",
+        "required": [
+          "id",
+          "object"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "example": "model"
+          },
+          "created": {
+            "type": "integer"
+          },
+          "owned_by": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
