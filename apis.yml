@@ -195,6 +195,12 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgentSkill
+  url: skills/rightnow-audio-transcription.md
+- type: MCPServer
+  url: mcp/rightnow-mcp.yml
+- type: Overlay
+  url: overlays/rightnow-runinfra-overlay.yaml
 - type: TrustCenter
   url: security/rightnow-trust-center.yml
 - type: DomainSecurity
