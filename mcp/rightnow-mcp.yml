@@ -2,10 +2,9 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/rightnow-openapi.json
-note: >-
-  No official hosted/remote RunInfra MCP server was found (docs, GitHub org, MCP
-  registries). This is a DERIVED candidate tool list mapped from the OpenAI-compatible
-  REST operations, offered as a proposal — not a published server.
+note: No official hosted/remote RunInfra MCP server was found (docs, GitHub org, MCP registries). This
+  is a DERIVED candidate tool list mapped from the OpenAI-compatible REST operations, offered as a proposal
+  — not a published server.
 api: RunInfra Inference API
 base_url: https://api.runinfra.ai/v1
 auth:
@@ -57,3 +56,9 @@ tools:
   method: GET
   path: /models/{model}
   description: Retrieve a single deployed model by id.
+deployment:
+  mode: none
+  verified: derived
+  tools: 9
+  checked: '2026-08-12'
+  source: catalog MCP census

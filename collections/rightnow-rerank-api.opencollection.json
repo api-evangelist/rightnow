@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RunInfra Audio Rerank API",
+    "version": "2026-04-24"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rerank",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Rerank documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.runinfra.ai/v1/rerank",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Text reranking for verified TEI deployments and multimodal document reranking for compatible vLLM vision rerank deployments. Flat workspace requests are replay-safe when an Idempotency-Key is provided; pipeline-scoped rerank helpers are sent once."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

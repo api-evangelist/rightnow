@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RunInfra Audio API",
+    "version": "2026-04-24"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transcribe audio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.runinfra.ai/v1/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Speech-to-text via Whisper-class models. Multipart upload with a non-empty audio file. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries."
+        },
+        {
+          "info": {
+            "name": "Generate speech",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.runinfra.ai/v1/audio/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Text-to-speech served by XTTS, Bark, or Qwen3-TTS depending on the pipeline. Audio requests are sent once; do not rely on Idempotency-Key to deduplicate retries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RunInfra Audio Models API",
+    "version": "2026-04-24"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.runinfra.ai/v1/models"
+          },
+          "docs": "List verified deployed models in your workspace."
+        },
+        {
+          "info": {
+            "name": "Retrieve model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.runinfra.ai/v1/models/:model",
+            "params": [
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "Model ID returned by GET /v1/models."
+              }
+            ]
+          },
+          "docs": "Retrieve one verified deployed model by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

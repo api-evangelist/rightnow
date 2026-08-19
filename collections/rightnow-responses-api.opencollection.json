@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RunInfra Audio Responses API",
+    "version": "2026-04-24"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.runinfra.ai/v1/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Responses-shaped chat-completions compatibility adapter for compatible LLM and vision-language deployments. Does not implement full state, include, reasoning, hosted-tool, conversation-item, or background-job semantics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

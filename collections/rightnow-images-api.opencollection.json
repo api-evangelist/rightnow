@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RunInfra Audio Images API",
+    "version": "2026-04-24"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.runinfra.ai/v1/images/generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate images from verified image-generation deployments. OpenAI-compatible response shape. Native SDK clients send this request once even when an idempotency key is provided."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
