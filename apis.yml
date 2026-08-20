@@ -19,6 +19,17 @@ x-backed-by:
 tags:
 - Company
 - Artificial Intelligence
+- Machine-Learning
+- LLM Inference
+- GPU
+- Model Deployment
+- Serverless
+- OpenAI-Compatible
+- Embeddings
+- MLOps
+tags_raw:
+- Company
+- Artificial Intelligence
 - Machine Learning
 - LLM Inference
 - GPU
@@ -115,6 +126,8 @@ apis:
   humanURL: https://runinfra.ai/docs/api-reference/introduction
   baseURL: https://api.runinfra.ai/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
