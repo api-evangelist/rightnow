@@ -221,6 +221,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://www.runinfra.ai/
 - type: AgentSkill
   url: skills/rightnow-audio-transcription.md
 - type: X-MCPServerCandidate
