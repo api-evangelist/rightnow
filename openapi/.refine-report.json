@@ -1,13 +1,7 @@
 {
   "provider": "rightnow",
   "sources": [
-    "rightnow-audio-api-openapi.yml",
-    "rightnow-chat-api-openapi.yml",
-    "rightnow-embeddings-api-openapi.yml",
-    "rightnow-images-api-openapi.yml",
-    "rightnow-models-api-openapi.yml",
-    "rightnow-rerank-api-openapi.yml",
-    "rightnow-responses-api-openapi.yml"
+    "_original/rightnow-openapi.json"
   ],
   "outputs": [
     "rightnow-audio-api-openapi.yml",
@@ -21,6 +15,25 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "rightnow-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rightnow-openapi.json: declared missing tag: Audio",
+    "rightnow-openapi.json: declared missing tag: Chat",
+    "rightnow-openapi.json: declared missing tag: Embeddings",
+    "rightnow-openapi.json: declared missing tag: Images",
+    "rightnow-openapi.json: declared missing tag: Models",
+    "rightnow-openapi.json: declared missing tag: Rerank",
+    "rightnow-openapi.json: declared missing tag: Responses",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "rightnow-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-rerank-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

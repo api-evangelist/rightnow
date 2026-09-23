@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: RunInfra Audio Embeddings API
+  title: RunInfra Embeddings API
   description: OpenAI-compatible HTTP API for verified RunInfra inference deployments.
   version: '2026-04-24'
   contact:
@@ -59,8 +59,44 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   responses:
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadGateway:
       description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
       content:
         application/json:
           schema:
@@ -80,24 +116,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API key
       content:
@@ -110,26 +128,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     PaymentRequired:
       description: Insufficient credits
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Unexpected gateway error
       content:
         application/json:
           schema:
