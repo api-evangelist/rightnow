@@ -105,82 +105,6 @@ paths:
         '504':
           $ref: '#/components/responses/GatewayTimeout'
 components:
-  responses:
-    InternalServerError:
-      description: Unexpected gateway error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait before retrying
-        X-RateLimit-Remaining:
-          schema:
-            type: integer
-          description: Remaining requests in the window
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentRequired:
-      description: Insufficient credits
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -201,11 +125,34 @@ components:
             code:
               type: string
               nullable: true
-    Transcription:
+    SpeechRequest:
       type: object
+      required:
+      - model
+      - input
       properties:
-        text:
+        model:
           type: string
+          example: kokoro
+        input:
+          type: string
+        voice:
+          type: string
+        response_format:
+          type: string
+          enum:
+          - mp3
+          - wav
+          - flac
+          - opus
+          - aac
+          - pcm
+          default: mp3
+        speed:
+          type: number
+          default: 1
+          minimum: 0.25
+          maximum: 4
     TranscriptionRequest:
       type: object
       required:
@@ -236,34 +183,87 @@ components:
         temperature:
           type: number
           default: 0
-    SpeechRequest:
+    Transcription:
       type: object
-      required:
-      - model
-      - input
       properties:
-        model:
+        text:
           type: string
-          example: kokoro
-        input:
-          type: string
-        voice:
-          type: string
-        response_format:
-          type: string
-          enum:
-          - mp3
-          - wav
-          - flac
-          - opus
-          - aac
-          - pcm
-          default: mp3
-        speed:
-          type: number
-          default: 1
-          minimum: 0.25
-          maximum: 4
+  responses:
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in the window
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

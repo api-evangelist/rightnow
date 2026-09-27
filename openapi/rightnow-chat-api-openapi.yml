@@ -64,72 +64,6 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   schemas:
-    ChatCompletionChunk:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: chat.completion.chunk
-        created:
-          type: integer
-        model:
-          type: string
-        choices:
-          type: array
-          items:
-            type: object
-            properties:
-              index:
-                type: integer
-              delta:
-                $ref: '#/components/schemas/ChatMessage'
-              finish_reason:
-                type: string
-                nullable: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          - type
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            param:
-              type: string
-              nullable: true
-            code:
-              type: string
-              nullable: true
-    ChatMessage:
-      type: object
-      required:
-      - role
-      - content
-      properties:
-        role:
-          type: string
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-        content:
-          oneOf:
-          - type: string
-          - type: array
-        tool_calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolCall'
-        tool_call_id:
-          type: string
     ChatCompletionRequest:
       type: object
       required:
@@ -195,91 +129,6 @@ components:
                     type: string
         response_format:
           $ref: '#/components/schemas/ResponseFormat'
-    Usage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-    ToolCall:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          properties:
-            name:
-              type: string
-            arguments:
-              type: string
-              description: JSON-encoded arguments
-    Tool:
-      type: object
-      required:
-      - type
-      - function
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          required:
-          - name
-          properties:
-            name:
-              type: string
-            description:
-              type: string
-            parameters:
-              type: object
-              description: JSON Schema
-    ResponseFormat:
-      oneOf:
-      - type: object
-        properties:
-          type:
-            type: string
-            enum:
-            - text
-      - type: object
-        properties:
-          type:
-            type: string
-            enum:
-            - json_object
-      - type: object
-        required:
-        - type
-        - json_schema
-        properties:
-          type:
-            type: string
-            enum:
-            - json_schema
-          json_schema:
-            type: object
-            required:
-            - name
-            - schema
-            properties:
-              name:
-                type: string
-              strict:
-                type: boolean
-                default: false
-              schema:
-                type: object
-                description: JSON Schema
     ChatCompletion:
       type: object
       required:
@@ -317,21 +166,160 @@ components:
                 - content_filter
         usage:
           $ref: '#/components/schemas/Usage'
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
+    ToolCall:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+            arguments:
+              type: string
+              description: JSON-encoded arguments
+    ChatMessage:
+      type: object
+      required:
+      - role
+      - content
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+        content:
+          oneOf:
+          - type: string
+          - type: array
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCall'
+        tool_call_id:
+          type: string
+    ResponseFormat:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - text
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - json_object
+      - type: object
+        required:
+        - type
+        - json_schema
+        properties:
+          type:
+            type: string
+            enum:
+            - json_schema
+          json_schema:
+            type: object
+            required:
+            - name
+            - schema
+            properties:
+              name:
+                type: string
+              strict:
+                type: boolean
+                default: false
+              schema:
+                type: object
+                description: JSON Schema
+    ChatCompletionChunk:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: chat.completion.chunk
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              delta:
+                $ref: '#/components/schemas/ChatMessage'
+              finish_reason:
+                type: string
+                nullable: true
   responses:
-    NotFound:
-      description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:
@@ -342,26 +330,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Unexpected gateway error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
+    NotFound:
+      description: Model or deployment not found
       content:
         application/json:
           schema:
@@ -381,14 +357,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
+    InternalServerError:
+      description: Unexpected gateway error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     PaymentRequired:
       description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
       content:
         application/json:
           schema:

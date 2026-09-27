@@ -19,8 +19,8 @@ x-backed-by:
 tags:
 - Company
 - Artificial Intelligence
-- Machine-Learning
-- LLM Inference
+- Machine Learning
+- Inference
 - GPU
 - Model Deployment
 - Serverless
@@ -38,6 +38,7 @@ tags_raw:
 - OpenAI Compatible
 - Embeddings
 - MLOps
+- Machine-Learning
 deliveryModel:
   model: saas
   open_source: false
