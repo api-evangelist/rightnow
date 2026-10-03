@@ -58,25 +58,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          - type
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            param:
-              type: string
-              nullable: true
-            code:
-              type: string
-              nullable: true
     ModelList:
       type: object
       required:
@@ -105,15 +86,34 @@ components:
           type: integer
         owned_by:
           type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
   responses:
-    NotFound:
-      description: Model or deployment not found
+    Unauthorized:
+      description: Missing or invalid API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
+    NotFound:
+      description: Model or deployment not found
       content:
         application/json:
           schema:

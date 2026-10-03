@@ -61,26 +61,20 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   responses:
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     UnprocessableEntity:
       description: Request cannot be replayed or processed safely
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
       content:
         application/json:
           schema:
@@ -100,26 +94,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Unexpected gateway error
+    NotFound:
+      description: Model or deployment not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    PaymentRequired:
-      description: Insufficient credits
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
       content:
         application/json:
           schema:
@@ -136,59 +124,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Usage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-    RerankResult:
-      type: object
-      required:
-      - index
-      - score
-      properties:
-        index:
-          type: integer
-        score:
-          type: number
-        id:
-          type: string
-        text:
-          type: string
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/RerankContentPart'
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          - type
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            param:
-              type: string
-              nullable: true
-            code:
-              type: string
-              nullable: true
     RerankContentPart:
       oneOf:
       - type: object
@@ -232,6 +186,25 @@ components:
               properties:
                 url:
                   type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
     RerankDocument:
       oneOf:
       - type: string
@@ -331,6 +304,33 @@ components:
         - texts
       - required:
         - documents
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    RerankResult:
+      type: object
+      required:
+      - index
+      - score
+      properties:
+        index:
+          type: integer
+        score:
+          type: number
+        id:
+          type: string
+        text:
+          type: string
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/RerankContentPart'
   securitySchemes:
     bearerAuth:
       type: http

@@ -58,26 +58,92 @@ paths:
         '504':
           $ref: '#/components/responses/GatewayTimeout'
 components:
+  responses:
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in the window
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    Usage:
       type: object
       properties:
-        error:
-          type: object
-          required:
-          - message
-          - type
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            param:
-              type: string
-              nullable: true
-            code:
-              type: string
-              nullable: true
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
     ImageGenerationRequest:
       type: object
       required:
@@ -103,15 +169,25 @@ components:
           - url
           - b64_json
           default: b64_json
-    Usage:
+    Error:
       type: object
       properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
+        error:
+          type: object
+          required:
+          - message
+          - type
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
     ImageGenerationResponse:
       type: object
       required:
@@ -133,82 +209,6 @@ components:
                 type: string
         usage:
           $ref: '#/components/schemas/Usage'
-  responses:
-    InternalServerError:
-      description: Unexpected gateway error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait before retrying
-        X-RateLimit-Remaining:
-          schema:
-            type: integer
-          description: Remaining requests in the window
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentRequired:
-      description: Insufficient credits
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

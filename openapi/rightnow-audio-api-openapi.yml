@@ -106,6 +106,41 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   schemas:
+    Transcription:
+      type: object
+      properties:
+        text:
+          type: string
+    TranscriptionRequest:
+      type: object
+      required:
+      - file
+      - model
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Non-empty audio file (mp3, wav, m4a, flac, webm, ogg).
+        model:
+          type: string
+          example: whisper-large-v3
+        language:
+          type: string
+          description: ISO-639-1 code
+        prompt:
+          type: string
+        response_format:
+          type: string
+          enum:
+          - json
+          - text
+          - srt
+          - vtt
+          - verbose_json
+          default: json
+        temperature:
+          type: number
+          default: 0
     Error:
       type: object
       properties:
@@ -153,50 +188,63 @@ components:
           default: 1
           minimum: 0.25
           maximum: 4
-    TranscriptionRequest:
-      type: object
-      required:
-      - file
-      - model
-      properties:
-        file:
-          type: string
-          format: binary
-          description: Non-empty audio file (mp3, wav, m4a, flac, webm, ogg).
-        model:
-          type: string
-          example: whisper-large-v3
-        language:
-          type: string
-          description: ISO-639-1 code
-        prompt:
-          type: string
-        response_format:
-          type: string
-          enum:
-          - json
-          - text
-          - srt
-          - vtt
-          - verbose_json
-          default: json
-        temperature:
-          type: number
-          default: 0
-    Transcription:
-      type: object
-      properties:
-        text:
-          type: string
   responses:
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: Unexpected gateway error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:
@@ -212,54 +260,6 @@ components:
           schema:
             type: integer
           description: Remaining requests in the window
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentRequired:
-      description: Insufficient credits
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
       content:
         application/json:
           schema:
