@@ -59,12 +59,6 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   responses:
-    GatewayTimeout:
-      description: Gateway timeout
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     PaymentRequired:
       description: Insufficient credits
       content:
@@ -73,18 +67,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
       content:
         application/json:
           schema:
@@ -110,6 +92,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Malformed request
       content:
@@ -122,14 +122,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:

@@ -70,14 +70,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
+    Conflict:
+      description: Idempotency conflict
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Request cannot be replayed or processed safely
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:
@@ -97,26 +109,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Key scope mismatch or plan limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unavailable:
-      description: Endpoint stopped, provisioning, or at capacity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
       content:
         application/json:
           schema:
@@ -127,20 +127,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Malformed request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Unexpected gateway error
+    UnprocessableEntity:
+      description: Request cannot be replayed or processed safely
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unavailable:
+      description: Endpoint stopped, provisioning, or at capacity
       content:
         application/json:
           schema:
@@ -203,6 +203,28 @@ components:
                     type: string
         response_format:
           $ref: '#/components/schemas/ResponseFormat'
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema
     ResponsesEvent:
       type: object
       properties:
@@ -213,6 +235,15 @@ components:
           type: string
         response:
           $ref: '#/components/schemas/ResponsesResponse'
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
     ResponseFormat:
       oneOf:
       - type: object
@@ -250,25 +281,6 @@ components:
               schema:
                 type: object
                 description: JSON Schema
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          - type
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            param:
-              type: string
-              nullable: true
-            code:
-              type: string
-              nullable: true
     ResponsesResponse:
       type: object
       required:
@@ -295,37 +307,25 @@ components:
             type: object
         usage:
           $ref: '#/components/schemas/Usage'
-    Usage:
+    Error:
       type: object
       properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-    Tool:
-      type: object
-      required:
-      - type
-      - function
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-        function:
+        error:
           type: object
           required:
-          - name
+          - message
+          - type
           properties:
-            name:
+            message:
               type: string
-            description:
+            type:
               type: string
-            parameters:
-              type: object
-              description: JSON Schema
+            param:
+              type: string
+              nullable: true
+            code:
+              type: string
+              nullable: true
   securitySchemes:
     bearerAuth:
       type: http

@@ -94,26 +94,6 @@ apis:
     url: conventions/rightnow-conventions.yml
   - type: DataModel
     url: data-model/rightnow-data-model.yml
-- aid: rightnow:rightnow-chat-api
-  name: RightNow AI Chat API
-  description: The Chat API from RightNow AI — 1 operation(s) for chat.
-  humanURL: https://runinfra.ai/docs/api-reference/introduction
-  baseURL: https://api.runinfra.ai/v1
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/rightnow-chat-api-openapi.yml
-  - type: Authentication
-    url: authentication/rightnow-authentication.yml
-  - type: ErrorCatalog
-    url: errors/rightnow-problem-types.yml
-  - type: Conventions
-    url: conventions/rightnow-conventions.yml
-  - type: Idempotency
-    url: conventions/rightnow-conventions.yml
-  - type: DataModel
-    url: data-model/rightnow-data-model.yml
 - aid: rightnow:rightnow-embeddings-api
   name: RightNow AI Embeddings API
   description: The Embeddings API from RightNow AI — 1 operation(s) for embeddings.
@@ -206,6 +186,26 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/rightnow-responses-api-openapi.yml
+  - type: Authentication
+    url: authentication/rightnow-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rightnow-problem-types.yml
+  - type: Conventions
+    url: conventions/rightnow-conventions.yml
+  - type: Idempotency
+    url: conventions/rightnow-conventions.yml
+  - type: DataModel
+    url: data-model/rightnow-data-model.yml
+- aid: rightnow:rightnow-chat-completions-api
+  name: RightNow AI Chat Completions API
+  description: The Chat Completions API from RightNow AI — 1 operation(s) for chat completions.
+  humanURL: https://runinfra.ai/docs/api-reference/introduction
+  baseURL: https://api.runinfra.ai/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/rightnow-chat-completions-api-openapi.yml
   - type: Authentication
     url: authentication/rightnow-authentication.yml
   - type: ErrorCatalog
