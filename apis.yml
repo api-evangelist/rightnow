@@ -67,7 +67,7 @@ accessModel:
 image: https://runinfra.ai/favicon.ico
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-10-06'
 x-enrichment:
   date: '2026-07-21'
   status: enriched
@@ -222,6 +222,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://runinfra.ai/news/rss.xml
+  type: BlogRSS
 - type: Website
   url: https://www.runinfra.ai/
 - type: AgentSkill
