@@ -222,6 +222,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Plans
+  url: plans/rightnow-plans-pricing.yml
 - url: https://runinfra.ai/news/rss.xml
   type: BlogRSS
 - type: Website
