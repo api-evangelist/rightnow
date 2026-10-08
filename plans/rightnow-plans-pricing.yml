@@ -101,3 +101,93 @@ rate_limit_statements:
 - Requests at once per model, when busy 8 to 32
 - Limits that reset every 5 hours and every week
 - Up to $ 0.20 of chat a day
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  units:
+  - credit
+  - object
+  - token
+  plans:
+  - name: Pay as you go
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - credit
+    periods:
+    - other
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Starter
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Team
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Nemotron 3.5 Lightning 30B
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Qwen3.8 27B
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: Ornith 1.5 35B
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: GLM 5.3 Flash
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
+  - name: DeepSeek V4.1 Flash
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - token
+    periods:
+    - other
