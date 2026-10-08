@@ -1,0 +1,103 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://runinfra.ai/pricing
+sources:
+- https://runinfra.ai/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+  managed_tier: Starter
+published: true
+note: Page combines prepaid per-token Model API pricing with monthly coding plan tiers and a custom Enterprise
+  tier.
+plan_count: 10
+currency: USD
+plans:
+- name: Pay as you go
+  price_text: Any amount from $5
+  price: 5
+  currency: USD
+  period: per-use
+  unit: prepaid credit balance
+  included_quota: Pay per token at published prices; credits last a year
+- name: Enterprise
+  price_text: Custom pricing
+  period: none
+  included_quota: Audit logs and RBAC, custom volume and contract terms, SLAs up to 99.99%, SOC 2 Type
+    II, dedicated CSM
+- name: Starter
+  price_text: $10 a month
+  price: 10
+  currency: USD
+  period: month
+  unit: workspace
+  included_quota: About $12 of usage a month; 5-hour limit $1.11; weekly limit $2.77; Free Standby up
+    to $0.20 of chat a day
+  overage: 'At a limit: credits or free Standby'
+- name: Pro
+  price_text: $29 a month
+  price: 29
+  currency: USD
+  period: month
+  unit: workspace
+  included_quota: About $35 of usage a month; 5-hour limit $3.23; weekly limit $8.08; Free Standby up
+    to $0.58 of chat a day
+  overage: 'At a limit: credits or free Standby'
+- name: Team
+  price_text: $99 a month
+  price: 99
+  currency: USD
+  period: month
+  unit: workspace
+  included_quota: About $119 of usage a month; 5-hour limit $10.98; weekly limit $27.46; Free Standby
+    up to $1.98 of chat a day
+  overage: 'At a limit: credits or free Standby'
+- name: Nemotron 3.5 Lightning 30B
+  price_text: $ 0.05
+  price: 0.05
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+  included_quota: Cached input $0.01; Output $0.15
+- name: Qwen3.8 27B
+  price_text: $ 0.10
+  price: 0.1
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+  included_quota: Cached input $0.01; Output $0.40
+- name: Ornith 1.5 35B
+  price_text: $ 0.10
+  price: 0.1
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+  included_quota: Cached input $0.01; Output $0.40
+- name: GLM 5.3 Flash
+  price_text: Normally $0.11 now $ 0.08
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+  included_quota: Cached input normally $0.03 now $0.02; Output normally $0.45 now $0.33
+  overage: 26% off until Oct 13, 2026
+- name: DeepSeek V4.1 Flash
+  price_text: Normally $0.14 now $ 0.10
+  currency: USD
+  period: per-use
+  unit: 1M input tokens
+  included_quota: Cached input normally $0.03 now $0.02; Output normally $0.58 now $0.43
+  overage: 25% off until Oct 13, 2026
+rate_limit_statements:
+- Requests at once per model, when busy 4 to 32
+- Requests at once per model, when busy 5 to 32
+- Requests at once per model, when busy 8 to 32
+- Limits that reset every 5 hours and every week
+- Up to $ 0.20 of chat a day
