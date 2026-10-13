@@ -1,0 +1,23 @@
+edges:
+- partner_name: OpenAI
+  partner: openai
+  partner_match: domain
+  type: contract
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/rightnow/blob/main/openapi/rightnow-chat-completions-api-openapi.yml#L4
+  contract_reference:
+    repo: rightnow
+    spec_file: rightnow-chat-completions-api-openapi.yml
+    property: description
+    value: OpenAI-compatible
+    note: 'rightnow declares OpenAI compatibility: ''description: OpenAI-compatible HTTP API for verified RunInfra
+      inference deployments.'''
+    detected_by: sweep-model-routing.py
+    detected: '2026-10-13'
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+generated: '2026-10-13'
+method: searched
+checked: []
