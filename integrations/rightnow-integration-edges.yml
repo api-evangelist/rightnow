@@ -15,7 +15,7 @@ edges:
     note: 'rightnow declares OpenAI compatibility: ''description: OpenAI-compatible HTTP API for verified RunInfra
       inference deployments.'''
     detected_by: sweep-model-routing.py
-    detected: '2026-10-13'
+    detected: '2026-10-15'
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
 generated: '2026-10-13'
