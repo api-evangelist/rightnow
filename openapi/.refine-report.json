@@ -12,7 +12,9 @@
     "rightnow-rerank-api-openapi.yml",
     "rightnow-responses-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -25,11 +27,12 @@
     "rightnow-openapi.json: declared missing tag: Models",
     "rightnow-openapi.json: declared missing tag: Rerank",
     "rightnow-openapi.json: declared missing tag: Responses",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: rightnow-chat-completions-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 7 total)"
   ],
   "skipped": [
     "rightnow-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "rightnow-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "rightnow-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "rightnow-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "rightnow-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "rightnow-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -59,18 +59,6 @@ paths:
           $ref: '#/components/responses/GatewayTimeout'
 components:
   responses:
-    PaymentRequired:
-      description: Insufficient credits
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Rate limit exceeded
       headers:
@@ -86,38 +74,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Model or deployment not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    GatewayTimeout:
-      description: Gateway timeout
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadGateway:
-      description: Upstream serving backend transient failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Conflict:
       description: Idempotency conflict
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Unexpected gateway error
+    PaymentRequired:
+      description: Insufficient credits
       content:
         application/json:
           schema:
@@ -128,43 +92,49 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Unexpected gateway error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Key scope mismatch or plan limit exceeded
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadGateway:
+      description: Upstream serving backend transient failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GatewayTimeout:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Model or deployment not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    ImageGenerationResponse:
-      type: object
-      required:
-      - created
-      - data
-      properties:
-        created:
-          type: integer
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              b64_json:
-                type: string
-              revised_prompt:
-                type: string
-        usage:
-          $ref: '#/components/schemas/Usage'
-    Usage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
     ImageGenerationRequest:
       type: object
       required:
@@ -190,6 +160,36 @@ components:
           - url
           - b64_json
           default: b64_json
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    ImageGenerationResponse:
+      type: object
+      required:
+      - created
+      - data
+      properties:
+        created:
+          type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              b64_json:
+                type: string
+              revised_prompt:
+                type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
     Error:
       type: object
       properties:
