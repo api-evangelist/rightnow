@@ -1,4 +1,4 @@
-# Rightnow
+# RightNow AI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,6 +64,135 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Rightnow is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+RightNow AI (RunInfra) turns plain-English descriptions of an inference workload into production, OpenAI-compatible AI endpoints. The platform selects open-source models from Hugging Face, benchmarks GPU options, applies kernel optimizations (quantization, speculative decoding, KV-cache tuning, Forge kernels), and deploys serverless, pay-per-token inference APIs on RunInfra Cloud, RunPod, Modal, or self-hosted GPUs. Its REST API is OpenAI-shaped and covers chat completions, responses, embeddings, rerank, image generation, audio speech and transcription, and model listing. A Y Combinator-backed research lab, RightNow AI also publishes open-source GPU-kernel and inference tooling.
 
-Backed by: y-combinator
+**Areas:** Company · Artificial Intelligence · Machine Learning · Inference · GPU · Model Deployment · Serverless · OpenAI-Compatible · Embeddings · MLOps
+
+## RightNow AI on APIs.io
+
+Everything profiled for RightNow AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/rightnow/](https://apis.io/providers/rightnow/)** — or go straight to one of the APIs or properties below.
+
+### APIs (7)
+
+- [RightNow AI Audio API](https://apis.io/apis/rightnow/rightnow-audio-api/) — The Audio API from RightNow AI — 2 operation(s) for audio.
+- [RightNow AI Embeddings API](https://apis.io/apis/rightnow/rightnow-embeddings-api/) — The Embeddings API from RightNow AI — 1 operation(s) for embeddings.
+- [RightNow AI Images API](https://apis.io/apis/rightnow/rightnow-images-api/) — The Images API from RightNow AI — 1 operation(s) for images.
+- [RightNow AI Models API](https://apis.io/apis/rightnow/rightnow-models-api/) — The Models API from RightNow AI — 2 operation(s) for models.
+- [RightNow AI Rerank API](https://apis.io/apis/rightnow/rightnow-rerank-api/) — The Rerank API from RightNow AI — 1 operation(s) for rerank.
+- [RightNow AI Responses API](https://apis.io/apis/rightnow/rightnow-responses-api/) — The Responses API from RightNow AI — 1 operation(s) for responses.
+- [RightNow AI Chat Completions API](https://apis.io/apis/rightnow/rightnow-chat-completions-api/) — The Chat Completions API from RightNow AI — 1 operation(s) for chat completions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [rightnow-mcp.yml](https://apis.io/servers/rightnow/rightnow-mcp-yml/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [RunInfra Audio API](https://apis.io/collections/rightnow/open-rightnow-audio-api/)
+- [RunInfra Audio Chat API](https://apis.io/collections/rightnow/open-rightnow-chat-api/)
+- [RunInfra Audio Embeddings API](https://apis.io/collections/rightnow/open-rightnow-embeddings-api/)
+- [RunInfra Audio Images API](https://apis.io/collections/rightnow/open-rightnow-images-api/)
+- [RunInfra Audio Models API](https://apis.io/collections/rightnow/open-rightnow-models-api/)
+- [RunInfra Audio Rerank API](https://apis.io/collections/rightnow/open-rightnow-rerank-api/)
+- [RunInfra Audio Responses API](https://apis.io/collections/rightnow/open-rightnow-responses-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Rightnow Runinfra Overlay](https://apis.io/overlays/rightnow/rightnow-runinfra-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Rightnow Authentication](https://apis.io/security/rightnow/rightnow-authentication/)
+- [Rightnow Domain Security](https://apis.io/security/rightnow/rightnow-domain-security/)
+- [Rightnow Trust Center](https://apis.io/security/rightnow/rightnow-trust-center/)
+- [Rightnow Vulnerability Disclosure](https://apis.io/security/rightnow/rightnow-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Rightnow Plans Pricing](https://apis.io/plans/rightnow/rightnow-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.runinfra.ai/)
+- [Documentation](https://runinfra.ai/docs)
+- [Getting started](https://runinfra.ai/docs/introduction/quickstart)
+- [API reference](https://runinfra.ai/docs/api-reference/introduction)
+- [Pricing](https://runinfra.ai/pricing)
+- [Sign up](https://runinfra.ai/sign-up)
+- [Support](https://runinfra.ai/contact)
+- [Blog](https://runinfra.ai/news)
+- [Terms of service](https://runinfra.ai/terms-of-service)
+- [Privacy policy](https://runinfra.ai/privacy-policy)
+- [GitHub](https://github.com/RightNow-AI)
+- [Status](https://status.runinfra.ai/)
+
+## API Evangelist rating
+
+**Kin Score 59.5** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 52.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 92.1 |
+
+**Agent readiness 26.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/rightnow/](https://apis.io/providers/rightnow/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for RightNow AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/rightnow/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
